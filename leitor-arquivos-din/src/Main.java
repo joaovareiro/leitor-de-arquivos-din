@@ -23,9 +23,6 @@ public class Main {
                 BufferedReader br = new BufferedReader(isr);
                 String linha = br.readLine();
                 while (linha != null) {
-/*
-                    System.out.println(linha);
-*/
                     String[] arrayLinha;
                     arrayLinha = new String[2];
                     arrayLinha = linha.split(" ");
