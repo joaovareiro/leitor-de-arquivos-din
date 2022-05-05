@@ -11,10 +11,8 @@ public class Main {
         ArrayList<String> enderecos = new ArrayList<>();
         ArrayList<String> enderecosRepetidos = new ArrayList<>();
         while (true) {
-
-
             System.out.println("Digite o nome do arquivo (por favor, diferencie letras maiúsculas e minúsculas)");
-            String nomeArquivo = sc.nextLine();
+            String nomeArquivo = sc.next();
             if (!nomeArquivo.contains(".din")) {
                 nomeArquivo = nomeArquivo + ".din";
             }
@@ -33,6 +31,23 @@ public class Main {
                     enderecos.add(arrayLinha[1]);
                     linha = br.readLine();
                 }
+                System.out.println("Número de bytes acessados na memória: " + bytes);
+                enderecosRepetidos = (ArrayList<String>) enderecos.stream().filter(e -> Collections.frequency(enderecos,e)>1).distinct().collect(Collectors.toList());
+                if(enderecosRepetidos.isEmpty()){
+                    System.out.println("Não existem acessos redundantes no mesmo arquivo.");
+                }else{
+                    System.out.println("Acessos redundantes:");
+                    enderecosRepetidos.forEach(System.out::println);
+                }
+                System.out.println("""
+                        Deseja encerrar ler mais um arquivo?\s
+                        1 - Sim
+                        2 - Não""");
+                int op = sc.nextInt();
+                nomeArquivo = null;
+                if (op == 2) {
+                    break;
+                }
             } catch (FileNotFoundException e) {
                 System.out.println("""
                         O arquivo não foi encontrado.\s
@@ -42,7 +57,7 @@ public class Main {
                 int op = sc.nextInt();
                 nomeArquivo = null;
                 if (op == 1) {
-                    System.exit(0);
+                    break;
                 }
             } catch ( ArrayIndexOutOfBoundsException e){
                 System.out.println("""
@@ -53,20 +68,9 @@ public class Main {
                 int op = sc.nextInt();
                 nomeArquivo = null;
                 if (op == 1) {
-                    System.exit(0);
+                    break;
                 }
             }
-            break;
-        }
-
-        System.out.println("Número de bytes acessados na memória: " + bytes);
-        enderecosRepetidos = (ArrayList<String>) enderecos.stream().filter(e -> Collections.frequency(enderecos,e)>1).distinct().collect(Collectors.toList());
-        if(enderecosRepetidos.isEmpty()){
-            System.out.println("Não existem acessos redundantes no mesmo arquivo.");
-        }else{
-            System.out.println("Acessos redundantes:");
-            enderecosRepetidos.forEach(System.out::println);
-        }
         }
     }
-
+}
